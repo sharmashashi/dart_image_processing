@@ -81,8 +81,7 @@ class U8Bitmap {
   ///- returns image pixels in the form of list
   List<List<int>> imread() {
     List<List<int>> pixelMat = List<List<int>>(imageHeight);
-    List<int> rowColumn =
-        _rawBytes.sublist(_offsetToPixel, _rawBytes.length - 2);
+    List<int> rowColumn = _rawBytes.sublist(_offsetToPixel,_offsetToPixel+(imageHeight*imageWidth));
     int commonIndex = 0;
     for (int height = 0; height < imageHeight; height++) {
       List<int> tempList = List<int>(imageWidth);
