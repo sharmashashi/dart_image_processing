@@ -81,9 +81,10 @@ class U8Bitmap {
   ///- returns image pixels in the form of list
   List<List<int>> imread() {
     List<List<int>> pixelMat = List<List<int>>(imageHeight);
-    List<int> rowColumn = _rawBytes.sublist(_offsetToPixel,_offsetToPixel+(imageHeight*imageWidth));
+    List<int> rowColumn = _rawBytes.sublist(
+        _offsetToPixel, _offsetToPixel + (imageHeight * imageWidth));
     int commonIndex = 0;
-    for (int height = 0; height < imageHeight; height++) {
+    for (int height = imageHeight - 1; height >= 0; height--) {
       List<int> tempList = List<int>(imageWidth);
       for (int width = 0; width < imageWidth; width++) {
         tempList[width] = rowColumn[commonIndex];
@@ -98,10 +99,20 @@ class U8Bitmap {
   ///   in the form of bitmap
   imwrite(String imageName, List<List<int>> image) {
     List<int> finalImage = List();
-    for (List<int> each in image) {
-      finalImage += each;
+    List<List<int>> tempList = List(imageWidth);
+    int indexCounter = 0;
+    for (int height = imageHeight - 1; height >= 0; height--) {
+      tempList[indexCounter] = image[height];
+      indexCounter++;
     }
-    finalImage = _headerBytes + finalImage + [0, 0];
+    for (int i = 0; i < imageHeight; i++) {
+      for (int j = 0; j < imageWidth; j++) {
+        finalImage.add(tempList[i][j]);
+      }
+    }
+    finalImage = _headerBytes + finalImage;
     File('$imageName.bmp').writeAsBytesSync(finalImage);
   }
+
+  
 }
