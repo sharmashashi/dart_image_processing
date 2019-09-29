@@ -12,6 +12,8 @@ void main() {
       IntensityTransformation(srcImage: imageArray);
 
   // var negativeImage = transform.negative(bpp: object.bitsPerPixel);
-  var logTransformedImage = transform.logTransformation(constant: 70);
-  object.imwrite('outputs/output', logTransformedImage);
+  // var logTransformedImage = transform.logTransformation(constant: 70);
+  var gammaTransformedImage =
+      transform.gammaTransformation(constant: 1, gammaConstant: 0.04);
+  object.imwrite('outputs/output', gammaTransformedImage);
 }
