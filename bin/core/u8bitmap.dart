@@ -17,6 +17,9 @@ class U8Bitmap {
   ///absolute path to imagefile
   final String _imagePath;
 
+  ///bits per pixel
+  int _bpp;
+
   ///size of bitmap file in bytes
   int fileSize;
 
@@ -31,7 +34,11 @@ class U8Bitmap {
     _headerBytes = _findHeaderBytes();
     imageHeight = _findImageHeight();
     imageWidth = _findImageWidth();
+    _bpp = _bytesToValue(_rawBytes.sublist(28, 30));
   }
+
+  ///getter for bits per pixel
+  get bitsPerPixel => _bpp;
 
   ///finds header bytes
   _findHeaderBytes() => _rawBytes.sublist(0, _offsetToPixel);
@@ -113,6 +120,4 @@ class U8Bitmap {
     finalImage = _headerBytes + finalImage;
     File('$imageName.bmp').writeAsBytesSync(finalImage);
   }
-
-  
 }
