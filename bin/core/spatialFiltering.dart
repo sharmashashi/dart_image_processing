@@ -1,12 +1,24 @@
+import 'package:meta/meta.dart';
+
 ///- spatial filtering using different kernels
 class SpatialFiltering {
   ///to filter and return an image
 
-  List<List<int>> simpleFilter({List<List<int>> image, int kernelSize}) {
+  List<List<int>> simpleFilter(
+      {@required List<List<int>> image, @required int kernelSize}) {
     int imageHeight = image.length, imageWidth = image[0].length;
 
     ///to store filtered pixels
-    List<List<int>> filteredImage = image;
+    List<List<int>> filteredImage = List();
+
+    ///populate list with garbage
+    for (int i = 0; i < image.length; i++) {
+      List<int> tempImage1 = List();
+      for (int j = 0; j < image[0].length; j++) {
+        tempImage1.add(j);
+      }
+      filteredImage.add(tempImage1);
+    }
 
     ///visit each pixel and find the average value for it
     ///excluding border pixels
